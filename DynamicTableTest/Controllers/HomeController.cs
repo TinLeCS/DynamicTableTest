@@ -9,6 +9,8 @@ namespace DynamicTableTest.Controllers
 {
     public class HomeController : Controller
     {
+        private DynamicTableContext _ctx = new DynamicTableContext();
+
         public ActionResult Index()
         {
             return View();
@@ -28,34 +30,28 @@ namespace DynamicTableTest.Controllers
             return View();
         }
 
-        public JsonResult GetBooks()
+        public JsonResult GetStudents()
         {
-            var books = new List<Book>();
-            books.Add(
-                new Book
-                {
-                    Id = 1,
-                    Author = "Author 1",
-                    Price = 9.99,
-                    PublishYear = 2015,
-                    Title = "First Book"
-                }
-            );
-            books.Add(
-                new Book
-                {
-                    Id = 2,
-                    Author = "Author 2",
-                    Price = 19.99,
-                    PublishYear = 2011,
-                    Title = "Second Book"
-                }
-            );
+
+            var students = _ctx.Students.ToList();
 
 
-            return new JsonResult()
+            return new CustomJsonResult()
             {
-                Data = books,
+                Data = students,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult GetCourses()
+        {
+
+            var courses = _ctx.Courses.ToList();
+
+
+            return new CustomJsonResult()
+            {
+                Data = courses,
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }

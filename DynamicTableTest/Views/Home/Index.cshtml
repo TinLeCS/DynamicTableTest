@@ -1,6 +1,13 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<br/>
+Table
+<select>
+    <option value="GetStudents">Students</option>
+    <option value="GetCourses">Courses</option>
+</select>
+<hr/>
 <div id="dynamicTable"></div>
 
 @Scripts.Render("~/Scripts/dynamicTable.js")
@@ -11,10 +18,17 @@
         $(document).ready(function () {
             var divId = "dynamicTable";
 
-            $.get("/Home/GetBooks/",
+            $.get("/Home/" + $('select').val(),
                 function(data){
                     createTable(data, divId)
                 });
+
+            $('select').change(function () {
+                $.get("/Home/" + $('select').val(),
+                function (data) {
+                    createTable(data, divId)
+                });
+            })
         })
     </script>
 

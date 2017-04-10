@@ -52,7 +52,10 @@
 }
 
 function addSpace(text) {
-    text = text.replace(/([A-Z])/g, ' $1').trim();
+    var ignoreList = ["ID"];
+
+    if ($.inArray(text, ignoreList) === -1)
+        text = text.replace(/([A-Z])/g, ' $1').trim();
 
     return text;
 }
