@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DynamicTableTest.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -25,6 +26,38 @@ namespace DynamicTableTest.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public JsonResult GetBooks()
+        {
+            var books = new List<Book>();
+            books.Add(
+                new Book
+                {
+                    Id = 1,
+                    Author = "Author 1",
+                    Price = 9.99,
+                    PublishYear = 2015,
+                    Title = "First Book"
+                }
+            );
+            books.Add(
+                new Book
+                {
+                    Id = 2,
+                    Author = "Author 2",
+                    Price = 19.99,
+                    PublishYear = 2011,
+                    Title = "Second Book"
+                }
+            );
+
+
+            return new JsonResult()
+            {
+                Data = books,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
         }
     }
 }
