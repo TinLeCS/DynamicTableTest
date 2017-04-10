@@ -25,6 +25,7 @@ namespace DynamicTableTest
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/datatables.min.css",
                       "~/Content/site.css"));
         }
     }

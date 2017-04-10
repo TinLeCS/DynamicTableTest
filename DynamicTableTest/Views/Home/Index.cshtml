@@ -5,10 +5,12 @@
 
 @Scripts.Render("~/Scripts/dynamicTable.js")
 @section scripts{
+    <script type="text/javascript" src="~/Scripts/datatables.min.js"></script>
     <script type="text/javascript">
         
         $(document).ready(function () {
             var divId = "dynamicTable";
+
             $.get("/Home/GetBooks/",
                 function(data){
                     createTable(data, divId)

@@ -40,6 +40,15 @@
     divContainer.innerHTML = "";
     divContainer.appendChild(table);
     $('table').addClass("table table-striped");
+
+    $('table').DataTable({
+        pagingType: "full_numbers",
+        columnDefs: [{
+            "targets": 'no-sort',
+            "orderable": false,
+            "order": []
+        }],
+    });
 }
 
 function addSpace(text) {
