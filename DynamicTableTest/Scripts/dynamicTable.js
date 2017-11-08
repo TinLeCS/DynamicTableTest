@@ -39,20 +39,21 @@
     var divContainer = document.getElementById(divId);
     divContainer.innerHTML = "";
     divContainer.appendChild(table);
-    $('table').addClass("table table-striped");
+    $('#' + divId).find('table').addClass("table table-striped");
 
-    $('table').DataTable({
-        pagingType: "full_numbers",
-        columnDefs: [{
-            "targets": 'no-sort',
-            "orderable": false,
-            "order": []
-        }],
-    });
+    if(divId !== "resultTable")
+        $('#' + divId).find('table').DataTable({
+            pagingType: "full_numbers",
+            columnDefs: [{
+                "targets": 'no-sort',
+                "orderable": false,
+                "order": []
+            }],
+        });
 }
 
 function addSpace(text) {
-    var ignoreList = ["ID"];
+    var ignoreList = ["ID", "CourseID"];
 
     if ($.inArray(text, ignoreList) === -1)
         text = text.replace(/([A-Z])/g, ' $1').trim();

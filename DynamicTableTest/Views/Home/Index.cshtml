@@ -3,31 +3,74 @@
 }
 <br/>
 Table
-<select>
-    <option value="GetStudents">Students</option>
-    <option value="GetCourses">Courses</option>
-</select>
+@Html.DropDownList("Table")
 <hr/>
 <div id="dynamicTable"></div>
+
+<hr />
+<table width="780">
+    <tr>
+        <td align="left">
+            SQL Queue
+            <select id="sqlQueue">
+                <option value="">--Select Query--</option>
+            </select>
+        </td>
+        <td>
+        </td>
+        <td align="right">
+            <button id="run" class="btn btn-danger">
+                <span class="glyphicon glyphicon-ok"></span> Run
+            </button>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <textarea rows="4" placeholder="Please enter your SQL query..." style="width:100%; max-width:100%"></textarea>
+        </td>
+    </tr>
+</table>
+
+<hr/>
+<h3>Result</h3>
+<div id="resultTable"></div>
 
 @Scripts.Render("~/Scripts/dynamicTable.js")
 @section scripts{
     <script type="text/javascript" src="~/Scripts/datatables.min.js"></script>
     <script type="text/javascript">
-        
-        $(document).ready(function () {
-            var divId = "dynamicTable";
+        var index = 1;
 
+        $(document).ready(function () {
             $.get("/Home/" + $('select').val(),
-                function(data){
-                    createTable(data, divId)
+                function (data) {
+                    createTable(data, "dynamicTable")
                 });
 
-            $('select').change(function () {
+            $("#run").click(function () {
+                $('#sqlQueue').append($('<option>', {
+                    value: $("textarea").val(),
+                    text: 'Query' + index
+                }));
+
+                index++;
+
+                $.get("/Home/GetResult?query=" + $("textarea").val(),
+                function (data) {
+                    createTable(data, "resultTable")
+                });
+                $("textarea").val("");
+            })
+
+            $('#Table').change(function () {
                 $.get("/Home/" + $('select').val(),
                 function (data) {
-                    createTable(data, divId)
+                    createTable(data, "dynamicTable")
                 });
+            })
+
+            $('#sqlQueue').change(function () {
+                $("textarea").val($(this).val());
             })
         })
     </script>
